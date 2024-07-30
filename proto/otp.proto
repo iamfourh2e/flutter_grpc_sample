@@ -1,0 +1,65 @@
+syntax="proto3";
+option go_package="/pb";
+service OTP {
+  rpc SendMsg(MessageRequest) returns (MessageReply) {};
+  rpc Verified(VerifiedRequest) returns (VerifiedReply) {};
+  rpc WatchOTP(WatchOTPRequest) returns (stream WatchOTPReply) {};
+  rpc FindOneOTP(FindOneRequest) returns (FindOneReply) {};
+}
+
+message FindOneRequest{
+  string id = 1;
+}
+message FindOneReply{
+  string id = 1;
+  string status = 2;
+  string token = 3;
+  string phone=4;
+  string type = 5;
+}
+message VerifiedRequest {
+  string id = 1;
+  string phone = 2;
+  string otp = 3;
+}
+
+message VerifiedReply {
+  string id = 1;
+  string status = 2;
+  string token = 3;
+  string phone = 4;
+  string type = 5;
+}
+
+message WatchOTPRequest {
+  string id = 1;
+}
+
+
+message WatchOTPReply{
+  string id = 1;
+  string phone = 2;
+  string otp = 3;
+  string status = 4;
+  int64 expire_in = 5;
+  string type = 6;
+}
+
+
+message MessageRequest {
+	string phone = 1;
+    repeated string roles = 2;
+	string UUID = 3;
+    repeated string modules = 4;
+    string type = 5;
+    string fcmToken = 6;
+}
+message MessageReply {
+  string id = 1;
+  string phone = 2;
+  string otp = 3;
+  string status = 4;
+  int64 expire_in = 5;
+  string type = 6;
+  optional string token = 7;
+}
